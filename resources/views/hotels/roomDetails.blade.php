@@ -1,7 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="hero-wrap js-fullheight" style="margin-top:-25px; background-image: url({{asset('assets/images/room-1.jpg')}});"
+    @if (Session::has('success'))
+        <div class="alert alert-success">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+
+    @if (Session::has('error'))
+        <div class="alert alert-danger">
+            {{ Session::get('error') }}
+        </div>
+    @endif
+    <div class="hero-wrap js-fullheight"
+        style="margin-top:-25px; background-image: url({{ asset('assets/images/room-1.jpg') }});"
         data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
@@ -9,35 +21,39 @@
                 data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
                     <h2 class="subheading">Welcome to Vacation Rental</h2>
-                    <h1 class="mb-4">{{$room->name}}</h1>
+                    <h1 class="mb-4">{{ $room->name }}</h1>
                     <!-- <p><a href="#" class="btn btn-primary">Learn more</a> <a href="#" class="btn btn-white">Contact us</a></p> -->
                 </div>
             </div>
         </div>
     </div>
-
     <section class="ftco-section ftco-book ftco-no-pt ftco-no-pb">
         <div class="container">
             <div class="row justify-content-end">
                 <div class="col-lg-4">
-                    <form action="#" class="appointment-form" style="margin-top: -568px;">
+
+
+                    <form action="{{ route('hotel.rooms.booking', $room->id) }}" method="POST" class="appointment-form"
+                        style="margin-top: -568px;">
+                        @csrf
                         <h3 class="mb-3">Book this room</h3>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Email">
+                                    <input type="text" name="email" class="form-control" placeholder="Email">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Full Name">
+                                    <input type="text" name="name" class="form-control" placeholder="Full Name">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Phone Number">
+                                    <input type="text" name="phone_number" class="form-control"
+                                        placeholder="Phone Number">
                                 </div>
                             </div>
 
@@ -45,7 +61,7 @@
                                 <div class="form-group">
                                     <div class="input-wrap">
                                         <div class="icon"><span class="ion-md-calendar"></span></div>
-                                        <input type="text" class="form-control appointment_date-check-in"
+                                        <input type="text" name="check_in" class="form-control appointment_date-check-in"
                                             placeholder="Check-In">
                                     </div>
                                 </div>
@@ -54,12 +70,10 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="icon"><span class="ion-md-calendar"></span></div>
-                                    <input type="text" class="form-control appointment_date-check-out"
+                                    <input type="text" name="check_out" class="form-control appointment_date-check-out"
                                         placeholder="Check-Out">
                                 </div>
                             </div>
-
-
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -78,11 +92,12 @@
 
 
 
+
     <section class="ftco-section bg-light">
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-md-6 wrap-about">
-                    <div class="img img-2 mb-4" style=" background-image: url({{asset('assets/images/image_2.jpg')}});">
+                    <div class="img img-2 mb-4" style=" background-image: url({{ asset('assets/images/image_2.jpg') }});">
                     </div>
                     <h2>The most recommended vacation rental</h2>
                     <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a

@@ -22,8 +22,9 @@ class CreateBookingsTable extends Migration
             $table->string('check_out');
             $table->integer('days');
             $table->decimal('price', 10, 2);
-            $table->unsignedBigInteger('user_id'); // Assuming bookings belong to users
+            $table->unsignedBigInteger('user_id');
             $table->string('hotel_name');
+            $table->string('room_name');
             $table->string('status')->default('pending');
             $table->timestamps();
 

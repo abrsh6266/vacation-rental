@@ -20,6 +20,7 @@ class Booking extends Model
         'price',
         'user_id',
         'hotel_name',
+        'room_name',
         'status',
     ];
 
