@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="hero-wrap js-fullheight" style="background-image: url('images/room-1.jpg');"
+    <div class="hero-wrap js-fullheight" style="margin-top:-25px; background-image: url({{asset('assets/images/room-1.jpg')}});"
         data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
@@ -9,7 +9,7 @@
                 data-scrollax-parent="true">
                 <div class="col-md-7 ftco-animate">
                     <h2 class="subheading">Welcome to Vacation Rental</h2>
-                    <h1 class="mb-4">Suite Room</h1>
+                    <h1 class="mb-4">{{$room->name}}</h1>
                     <!-- <p><a href="#" class="btn btn-primary">Learn more</a> <a href="#" class="btn btn-white">Contact us</a></p> -->
                 </div>
             </div>
@@ -82,7 +82,7 @@
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-md-6 wrap-about">
-                    <div class="img img-2 mb-4" style="background-image: url(images/image_2.jpg);">
+                    <div class="img img-2 mb-4" style=" background-image: url({{asset('assets/images/image_2.jpg')}});">
                     </div>
                     <h2>The most recommended vacation rental</h2>
                     <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
