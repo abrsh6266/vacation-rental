@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('hotels/rooms/{id}',[HotelController::class,'rooms'])->name('hotel.rooms');
+Route::get('hotels/rooms-details/{id}',[HotelController::class,'roomDetails'])->name('hotel.rooms.details');

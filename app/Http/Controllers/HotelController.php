@@ -13,4 +13,10 @@ class HotelController extends Controller
 
         return view('hotels.rooms', compact('rooms'));
     }
+    public function roomDetails($id)
+    {
+        $room = Apartment::find($id);
+
+        return view('hotels.roomDetails', compact('room'));
+    }
 }
