@@ -22,7 +22,8 @@
 </div> --}}
 
 
-    <div class="hero-wrap js-fullheight" style="margin-top: 25px; background-image: url('{{ asset('assets/images/image_2.jpg') }}')">
+    <div class="hero-wrap js-fullheight"
+        style="margin-top: 25px; background-image: url('{{ asset('assets/images/image_2.jpg') }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
@@ -41,42 +42,21 @@
     <section class="ftco-section ftco-services">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
-                    <div class="d-block services-wrap text-center">
-                        <div class="img" style="background-image: url(images/services-1.jpg);"></div>
-                        <div class="media-body py-4 px-3">
-                            <h3 class="heading">Sheraton</h3>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                                unorthographic.</p>
-                            <p>Location: Cairo.</p>
-                            <p><a href="rooms.html" class="btn btn-primary">View rooms</a></p>
+                @foreach ($hotels as $hotel)
+                    <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
+                        <div class="d-block services-wrap text-center">
+                            <div class="img"
+                                style="background-image: url({{ asset('assets/images/' . $hotel->image) }});">
+                            </div>
+                            <div class="media-body py-4 px-3">
+                                <h3 class="heading">{{ $hotel->name }}</h3>
+                                <p>{{ $hotel->description }}</p>
+                                <p>Location: {{ $hotel->location }}.</p>
+                                <p><a href="rooms.html" class="btn btn-primary">View rooms</a></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
-                    <div class="d-block services-wrap text-center">
-                        <div class="img" style="background-image: url(images/image_4.jpg);"></div>
-                        <div class="media-body py-4 px-3">
-                            <h3 class="heading">The Plaza Hote</h3>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                                unorthographic.</p>
-                            <p>Location: New york.</p>
-                            <p><a href="#" class="btn btn-primary">View rooms</a></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 d-flex services align-self-stretch px-4 ftco-animate">
-                    <div class="d-block services-wrap text-center">
-                        <div class="img" style="background-image: url(images/image_4.jpg);"></div>
-                        <div class="media-body py-4 px-3">
-                            <h3 class="heading">The Ritz</h3>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                                unorthographic.</p>
-                            <p>Location: Paris.</p>
-                            <p><a href="#" class="btn btn-primary">View rooms</a></p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -89,96 +69,31 @@
                 </div>
             </div>
             <div class="row no-gutters">
-                <div class="col-lg-6">
-                    <div class="room-wrap d-md-flex">
-                        <a href="#" class="img" style="background-image: url(images/room-1.jpg);"></a>
-                        <div class="half left-arrow d-flex align-items-center">
-                            <div class="text p-4 p-xl-5 text-center">
-                                <p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span></p>
-                                <!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
-                                <h3 class="mb-3"><a href="rooms.html">Suite Room</a></h3>
-                                <ul class="list-accomodation">
-                                    <li><span>Max:</span> 3 Persons</li>
-                                    <li><span>Size:</span> 45 m2</li>
-                                    <li><span>View:</span> Sea View</li>
-                                    <li><span>Bed:</span> 1</li>
-                                </ul>
-                                <p class="pt-1"><a href="room-single.html" class="btn-custom px-3 py-2">View Room Details
-                                        <span class="icon-long-arrow-right"></span></a></p>
+                @foreach ($rooms as $room)
+                    <div class="col-lg-6">
+                        <div class="room-wrap d-md-flex">
+                            <a href="#" class="img" style="background-image: url({{asset('assets/images/'.$room->image)}});"></a>
+                            <div class="half left-arrow d-flex align-items-center">
+                                <div class="text p-4 p-xl-5 text-center">
+                                    <p class="star mb-0"><span class="fa fa-star"></span><span
+                                            class="fa fa-star"></span><span class="fa fa-star"></span><span
+                                            class="fa fa-star"></span><span class="fa fa-star"></span></p>
+                                    <!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
+                                    <h3 class="mb-3"><a href="rooms.html">{{$room->name}}</a></h3>
+                                    <ul class="list-accomodation">
+                                        <li><span>Max:</span> {{$room->max_persons}} Persons</li>
+                                        <li><span>Size:</span> {{$room->size}} m2</li>
+                                        <li><span>View:</span> {{$room->view}}</li>
+                                        <li><span>Bed:</span> {{$room->num_beds}}</li>
+                                    </ul>
+                                    <p class="pt-1"><a href="room-single.html" class="btn-custom px-3 py-2">View Room
+                                            Details
+                                            <span class="icon-long-arrow-right"></span></a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="room-wrap d-md-flex">
-                        <a href="#" class="img" style="background-image: url(images/room-2.jpg);"></a>
-                        <div class="half left-arrow d-flex align-items-center">
-                            <div class="text p-4 p-xl-5 text-center">
-                                <p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span></p>
-                                <!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
-                                <h3 class="mb-3"><a href="rooms.html">Standard Room</a></h3>
-                                <ul class="list-accomodation">
-                                    <li><span>Max:</span> 3 Persons</li>
-                                    <li><span>Size:</span> 45 m2</li>
-                                    <li><span>View:</span> Sea View</li>
-                                    <li><span>Bed:</span> 1</li>
-                                </ul>
-                                <p class="pt-1"><a href="room-single.html" class="btn-custom px-3 py-2">View Room Details
-                                        <span class="icon-long-arrow-right"></span></a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="room-wrap d-md-flex">
-                        <a href="#" class="img order-md-last" style="background-image: url(images/room-3.jpg);"></a>
-                        <div class="half right-arrow d-flex align-items-center">
-                            <div class="text p-4 p-xl-5 text-center">
-                                <p class="star mb-0"><span class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span></p>
-                                <!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
-                                <h3 class="mb-3"><a href="rooms.html">Family Room</a></h3>
-                                <ul class="list-accomodation">
-                                    <li><span>Max:</span> 3 Persons</li>
-                                    <li><span>Size:</span> 45 m2</li>
-                                    <li><span>View:</span> Sea View</li>
-                                    <li><span>Bed:</span> 1</li>
-                                </ul>
-                                <p class="pt-1"><a href="room-single.html" class="btn-custom px-3 py-2">View Room
-                                        Details <span class="icon-long-arrow-right"></span></a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="room-wrap d-md-flex">
-                        <a href="#" class="img order-md-last"
-                            style="background-image: url(images/room-4.jpg);"></a>
-                        <div class="half right-arrow d-flex align-items-center">
-                            <div class="text p-4 p-xl-5 text-center">
-                                <p class="star mb-0"><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span><span class="fa fa-star"></span><span
-                                        class="fa fa-star"></span><span class="fa fa-star"></span></p>
-                                <!-- <p class="mb-0"><span class="price mr-1">$120.00</span> <span class="per">per night</span></p> -->
-                                <h3 class="mb-3"><a href="rooms.html">Deluxe Room</a></h3>
-                                <ul class="list-accomodation">
-                                    <li><span>Max:</span> 3 Persons</li>
-                                    <li><span>Size:</span> 45 m2</li>
-                                    <li><span>View:</span> Sea View</li>
-                                    <li><span>Bed:</span> 1</li>
-                                </ul>
-                                <p class="pt-1"><a href="room-single.html" class="btn-custom px-3 py-2">View Room
-                                        Details <span class="icon-long-arrow-right"></span></a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -189,7 +104,7 @@
         <div class="container">
             <div class="row no-gutters">
                 <div class="col-md-6 wrap-about">
-                    <div class="img img-2 mb-4" style="background-image: url('{{asset('assets/images/image_2.jpg')}}');">
+                    <div class="img img-2 mb-4" style="background-image: url('{{ asset('assets/images/image_2.jpg') }}');">
                     </div>
                     <h2>The most recommended vacation rental</h2>
                     <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a

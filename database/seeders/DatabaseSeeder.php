@@ -12,11 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            ApartmentSeeder::class,
+        ]);
         Hotel::factory()->create([
             'name' => 'Sheraton',
             'image' => 'image_4.jpg',
             'description' => 'Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.',
             'location' => 'Addis Ababa, Ambassador',
+            
         ]);
 
         Hotel::factory()->create([
