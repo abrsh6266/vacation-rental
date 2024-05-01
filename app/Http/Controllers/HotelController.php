@@ -19,4 +19,16 @@ class HotelController extends Controller
 
         return view('hotels.roomDetails', compact('room'));
     }
+    public function roomBooking(Request $request, $id)
+    {
+        if ($date('Y/m/d') < $request->check_in and $date('Y/m/d') < $request->check_out) {
+            if($request->check_in<$request->check_out){
+
+            }else{
+                echo 'check out date must be greater!';
+            }
+        } else {
+            echo 'invalid dates';
+        }
+    }
 }
