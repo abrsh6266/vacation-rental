@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,7 @@ Route::post('hotels/rooms-booking/{id}', [HotelController::class, 'roomBooking']
 //payment
 Route::get('hotels/pay', [HotelController::class, 'payWithPaypal'])->name('hotel.pay')->middleware('checkPrice');
 Route::get('hotels/success', [HotelController::class, 'success'])->name('hotel.success')->middleware('checkPrice');
+
+//users
+
+Route::get('user/my-bookings', [UserController::class, 'myBookings'])->name('user.bookings');
