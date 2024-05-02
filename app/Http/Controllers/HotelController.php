@@ -6,6 +6,7 @@ use App\Models\Apartment\Apartment;
 use App\Models\Booking;
 use App\Models\Hotel\Hotel;
 use Illuminate\Http\Request;
+use Redirect;
 use Session;
 
 class HotelController extends Controller
@@ -56,11 +57,23 @@ class HotelController extends Controller
                 'room_name' => $room->name,
                 'status' => 'pending',
             ]);
-
-            Session::flash('success', 'The room booked successfully');
+            $totalPrice = $days * $room->price;
+            $price = Session::put('price', $totalPrice);
+            $getPrice = Session::get($price);
+            return Redirect::route('hotel.pay');
         } else {
             Session::flash('error', 'Invalid dates');
+            return redirect()->back();
         }
-        return redirect()->back();
+
+    }
+    public function payWithPaypal()
+    {
+        return view('hotels.pay');
+    }
+    public function success()
+    {
+        Session::forget('price');
+        return view('hotels.success');
     }
 }

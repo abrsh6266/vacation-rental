@@ -21,3 +21,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('hotels/rooms/{id}', [HotelController::class, 'rooms'])->name('hotel.rooms');
 Route::get('hotels/rooms-details/{id}', [HotelController::class, 'roomDetails'])->name('hotel.rooms.details');
 Route::post('hotels/rooms-booking/{id}', [HotelController::class, 'roomBooking'])->name('hotel.rooms.booking');
+
+//payment
+Route::get('hotels/pay', [HotelController::class, 'payWithPaypal'])->name('hotel.pay');
+Route::get('hotels/success', [HotelController::class, 'success'])->name('hotel.success');
