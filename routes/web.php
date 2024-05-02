@@ -29,4 +29,4 @@ Route::get('hotels/success', [HotelController::class, 'success'])->name('hotel.s
 
 //users
 
-Route::get('user/my-bookings', [UserController::class, 'myBookings'])->name('user.bookings');
+Route::get('user/my-bookings', [UserController::class, 'myBookings'])->name('user.bookings')->middleware('auth::web');
