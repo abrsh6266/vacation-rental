@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+
 Route::get('hotels/rooms/{id}', [HotelController::class, 'rooms'])->name('hotel.rooms');
 Route::get('hotels/rooms-details/{id}', [HotelController::class, 'roomDetails'])->name('hotel.rooms.details');
 Route::post('hotels/rooms-booking/{id}', [HotelController::class, 'roomBooking'])->name('hotel.rooms.booking');
