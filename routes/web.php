@@ -42,7 +42,16 @@ Route::group(['prefix' => 'hotels'], function () {
 Route::get('user/my-bookings', [UserController::class, 'myBookings'])->name('user.bookings')->middleware('auth::web');
 
 // admin panel
-Route::get('admin/login', [AdminController::class, 'viewLogin'])->name('view.login');
+Route::get('admin/login', [AdminController::class, 'viewLogin'])->name('view.login')->middleware('CheckLogin');
 Route::post('admin/login', [AdminController::class, 'checkLogin'])->name('check.login');
 
-Route::get('admin/index', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
+    Route::get('/index', [AdminController::class, 'index'])->name('admin.dashboard');
+
+
+
+    //admins
+    Route::get('/all-admins', [AdminController::class, 'allAdmins'])->name('admin.all');
+
+
+});

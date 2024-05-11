@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Apartment\Apartment;
+use App\Models\Hotel\Hotel;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -22,6 +25,14 @@ class AdminController extends Controller
     }
     public function index()
     {
-        return view('admin.index');
+        $adminsCount = Admin::select()->count();
+        $hotelsCount = Hotel::select()->count();
+        $roomsCount = Apartment::select()->count();
+        return view('admin.index', compact('adminsCount', 'hotelsCount', 'roomsCount'));
+    }
+    public function allAdmins()
+    {
+        $admins = Admin::select()->orderBy('id','desc')->get();
+        return view('admin.all', compact('admins'));
     }
 }
