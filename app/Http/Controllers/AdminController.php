@@ -94,5 +94,35 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Failed to create hotel');
         }
     }
+    public function editHotel($id)
+    {
+        try {
+            $hotel = Hotel::findOrFail($id);
+            return view('admin.edithotel', compact('hotel'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Hotel not found');
+        }
+    }
+    public function updateHotel(Request $request, $id)
+{
+    try {
+        $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'location' => 'required|string',
+        ]);
+        $hotel = Hotel::findOrFail($id);
+        $hotel->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'location' => $request->location,
+        ]);
+        return redirect()->back()->with('success', 'Hotel updated successfully');
+    } catch (ValidationException $e) {
+        return redirect()->back()->withErrors($e->validator->errors())->withInput();
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Failed to update hotel');
+    }
+}
 
 }

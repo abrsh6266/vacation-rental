@@ -5,7 +5,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4 d-inline">Hotels</h5>
-                    <a href="{{route('hotel.create')}}" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
+                    <a href="{{ route('hotel.create') }}" class="btn btn-primary mb-4 text-center float-right">Create
+                        Hotels</a>
                     <table class="table">
                         <thead>
                             <tr>
@@ -23,8 +24,8 @@
                                     <th scope="row">{{ $hotel->id }}</th>
                                     <td>{{ $hotel->name }}</td>
                                     <td>{{ $hotel->location }}</td>
-                                    <td>{{$hotel->description}}</td>
-                                    <td><a href="update-category.html"
+                                    <td>{{ $hotel->description }}</td>
+                                    <td><a href="{{ route('hotel.edit',$hotel->id) }}"
                                             class="btn btn-warning text-white text-center ">Update
                                         </a></td>
                                     <td><a href="delete-category.html" class="btn btn-danger  text-center ">Delete </a></td>
