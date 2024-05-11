@@ -62,4 +62,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::post('/create-hotel', [AdminController::class, 'storeHotel'])->name('hotel.store');
     Route::get('/edit-hotel/{id}', [AdminController::class, 'editHotel'])->name('hotel.edit');
     Route::put('/edit-hotel/{id}', [AdminController::class, 'updateHotel'])->name('hotel.edit');
+    Route::delete('/delete-hotel/{id}', [AdminController::class, 'deleteHotel'])->name('hotel.delete');
+
+
+    //rooms
+    Route::get('/all-rooms', [AdminController::class, 'allRooms'])->name('rooms.all');
+    Route::get('/create-room', [AdminController::class, 'createRoom'])->name('room.create');
+    Route::post('/create-room', [AdminController::class, 'storeRoom'])->name('room.store');
+
 });

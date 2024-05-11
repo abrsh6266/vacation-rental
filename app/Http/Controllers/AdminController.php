@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\Apartment\Apartment;
 use App\Models\Hotel\Hotel;
+use File;
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -104,25 +105,81 @@ class AdminController extends Controller
         }
     }
     public function updateHotel(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string',
+                'description' => 'required|string',
+                'location' => 'required|string',
+            ]);
+            $hotel = Hotel::findOrFail($id);
+            $hotel->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'location' => $request->location,
+            ]);
+            return redirect()->back()->with('success', 'Hotel updated successfully');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update hotel');
+        }
+    }
+    public function deleteHotel($id)
+    {
+        try {
+            $hotel = Hotel::findOrFail($id);
+            $imagePath = public_path('assets/images/' . $hotel->image);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+            $hotel->delete();
+            return redirect()->back()->with('success', 'Hotel deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete hotel');
+        }
+    }
+
+    public function allRooms()
+    {
+        $rooms = Apartment::select()->orderBy('id', 'desc')->get();
+        return view('admin.allrooms', compact('rooms'));
+    }
+    public function createRoom()
+    {
+        return view('admin.createroom');
+    }
+    public function storeRoom(Request $request)
 {
     try {
         $request->validate([
             'name' => 'required|string',
-            'description' => 'required|string',
-            'location' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+            'max_persons' => 'required|integer',
+            'size' => 'required|integer',
+            'num_beds' => 'required|integer',
+            'view' => 'required|string',
+            'hotel_id' => 'required|exists:hotels,id',
         ]);
-        $hotel = Hotel::findOrFail($id);
-        $hotel->update([
+
+        // Upload the image
+        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
+        $request->image->move(public_path('assets/images'), $imageName);
+
+        $room = Apartment::create([
             'name' => $request->name,
-            'description' => $request->description,
-            'location' => $request->location,
+            'image' => $imageName,
+            'max_persons' => $request->max_persons,
+            'size' => $request->size,
+            'num_beds' => $request->num_beds,
+            'view' => $request->view,
+            'hotel_id' => $request->hotel_id,
         ]);
-        return redirect()->back()->with('success', 'Hotel updated successfully');
+        return redirect()->back()->with('success', 'Room created successfully');
     } catch (ValidationException $e) {
         return redirect()->back()->withErrors($e->validator->errors())->withInput();
     } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Failed to update hotel');
+        return redirect()->back()->with('error', 'Failed to create room');
     }
 }
-
 }

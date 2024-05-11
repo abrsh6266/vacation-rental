@@ -38,7 +38,7 @@
                                     style="margin-left: 20px;">Hotels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="rooms-admins/show-rooms.html" style="margin-left: 20px;">Rooms</a>
+                                <a class="nav-link" href="{{route('rooms.all')}}" style="margin-left: 20px;">Rooms</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="bookings-admins/show-bookings.html"
