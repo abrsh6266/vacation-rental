@@ -2,6 +2,7 @@
 
 namespace App\Models\Apartment;
 
+use App\Models\Hotel\Hotel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,4 +24,9 @@ class Apartment extends Model
     ];
 
     public $timestamps = true;
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class);
+    }
 }

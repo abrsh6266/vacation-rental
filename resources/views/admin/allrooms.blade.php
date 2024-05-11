@@ -32,7 +32,7 @@
                                     <td>{{$room->size}}</td>
                                     <td>{{$room->view}}</td>
                                     <td>{{$room->num_beds}}</td>
-                                    <td>{{$room->hotel_id}}</td>
+                                    <td>{{$room->hotel->name}}</td>
                                     <td><a href="delete-country.html" class="btn btn-danger  text-center ">Delete</a></td>
                                 </tr>
                             @endforeach
