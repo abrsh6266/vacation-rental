@@ -7,7 +7,7 @@
     <title>Admin Panel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{asset('assets/styles/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/styles/style.css') }}" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
@@ -23,46 +23,59 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav side-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left: 20px;" href="index.html">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admins/admins.html" style="margin-left: 20px;">Admins</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="hotels-admins/show-hotels.html"
-                                style="margin-left: 20px;">Hotels</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="rooms-admins/show-rooms.html" style="margin-left: 20px;">Rooms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="bookings-admins/show-bookings.html"
-                                style="margin-left: 20px;">Bookings</a>
-                        </li>
-                    </ul>
+                    @auth('admin')
+                        <ul class="navbar-nav side-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" style="margin-left: 20px;" href="index.html">Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="admins/admins.html" style="margin-left: 20px;">Admins</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="hotels-admins/show-hotels.html"
+                                    style="margin-left: 20px;">Hotels</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="rooms-admins/show-rooms.html" style="margin-left: 20px;">Rooms</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="bookings-admins/show-bookings.html"
+                                    style="margin-left: 20px;">Bookings</a>
+                            </li>
+                        </ul>
+                    @endauth
                     <ul class="navbar-nav ml-md-auto d-md-flex">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="admins/login-admins.html">login
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                username
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Logout</a>
+                        @auth('admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
 
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ Auth::guard('admin')->user()->name }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}></a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="admins/login-admins.html">login
+                                </a>
+                            </li>
+                        @endauth
+
 
 
                     </ul>
