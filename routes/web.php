@@ -21,13 +21,17 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-Route::get('hotels/rooms/{id}', [HotelController::class, 'rooms'])->name('hotel.rooms');
-Route::get('hotels/rooms-details/{id}', [HotelController::class, 'roomDetails'])->name('hotel.rooms.details');
-Route::post('hotels/rooms-booking/{id}', [HotelController::class, 'roomBooking'])->name('hotel.rooms.booking');
+Route::group(['prefix' => 'hotels'], function () {
+    //hotels
+    Route::get('/rooms/{id}', [HotelController::class, 'rooms'])->name('hotel.rooms');
+    Route::get('/rooms-details/{id}', [HotelController::class, 'roomDetails'])->name('hotel.rooms.details');
+    Route::post('/rooms-booking/{id}', [HotelController::class, 'roomBooking'])->name('hotel.rooms.booking');
+    //payment
+    Route::get('/pay', [HotelController::class, 'payWithPaypal'])->name('hotel.pay')->middleware('checkPrice');
+    Route::get('/success', [HotelController::class, 'success'])->name('hotel.success')->middleware('checkPrice');
 
-//payment
-Route::get('hotels/pay', [HotelController::class, 'payWithPaypal'])->name('hotel.pay')->middleware('checkPrice');
-Route::get('hotels/success', [HotelController::class, 'success'])->name('hotel.success')->middleware('checkPrice');
+});
+
 
 //users
 
