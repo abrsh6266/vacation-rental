@@ -7,7 +7,6 @@ use App\Models\Apartment\Apartment;
 use App\Models\Hotel\Hotel;
 use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
@@ -43,23 +42,22 @@ class AdminController extends Controller
     }
     public function storeAdmin(Request $request)
     {
-        try {
-            $request->validate([
-                'name' => 'required|string',
-                'email' => 'required|email|unique:admins,email',
-                'password' => 'required|string|min:8',
-            ]);
-
-            $admin = Admin::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
-
-            return redirect()->back()->with('success', 'Admin created successfully');
-        } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->validator->errors())->withInput();
-        }
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:admins,email',
+            'password' => 'required|string|min:6',
+        ]);
+        $admin = Admin::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->back()->with('success', 'Admin created successfully');
+    }
+    public function allHotels()
+    {
+        $hotels = Hotel::select()->orderBy('id', 'desc')->get();
+        return view('admin.allhotels', compact('hotels'));
     }
 
 }

@@ -34,7 +34,7 @@
                                 <a class="nav-link" href="{{ route('admin.all') }}" style="margin-left: 20px;">Admins</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="hotels-admins/show-hotels.html"
+                                <a class="nav-link" href="{{route('hotels.all')}}"
                                     style="margin-left: 20px;">Hotels</a>
                             </li>
                             <li class="nav-item">
