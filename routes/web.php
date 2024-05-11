@@ -52,6 +52,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     //admins
     Route::get('/all-admins', [AdminController::class, 'allAdmins'])->name('admin.all');
-
-
+    Route::get('/create-admin', [AdminController::class, 'createAdmin'])->name('admin.create');
+    Route::post('/create-admin', [AdminController::class, 'storeAdmin'])->name('admin.store');
 });
