@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-4 d-inline">Hotels</h5>
-                    <a href="create-hotels.html" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
+                    <a href="{{route('hotel.create')}}" class="btn btn-primary mb-4 text-center float-right">Create Hotels</a>
                     <table class="table">
                         <thead>
                             <tr>

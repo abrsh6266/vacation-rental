@@ -58,5 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
 
     //hotels
     Route::get('/all-hotels', [AdminController::class, 'allHotels'])->name('hotels.all');
+    Route::get('/create-hotel', [AdminController::class, 'createHotel'])->name('hotel.create');
+    Route::post('/create-hotel', [AdminController::class, 'storeHotel'])->name('hotel.store');
 
 });
