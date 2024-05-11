@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -39,3 +40,7 @@ Route::group(['prefix' => 'hotels'], function () {
 //users
 
 Route::get('user/my-bookings', [UserController::class, 'myBookings'])->name('user.bookings')->middleware('auth::web');
+
+// admin panel
+Route::get('admin/login', [AdminController::class, 'viewLogin'])->name('view.login')->middleware('auth::web');
+
