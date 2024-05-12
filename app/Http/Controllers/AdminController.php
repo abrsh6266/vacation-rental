@@ -216,4 +216,23 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Failed to delete booking');
         }
     }
+    public function changeStatus(Request $request, $id)
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+
+            $request->validate([
+                'status' => 'required|in:Pending,Confirmed,Cancelled',
+            ]);
+
+            $booking->update([
+                'status' => $request->status,
+            ]);
+
+            return redirect()->back()->with('success', 'Booking status updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update booking status');
+        }
+    }
+
 }
