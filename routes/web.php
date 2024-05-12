@@ -69,5 +69,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/all-rooms', [AdminController::class, 'allRooms'])->name('rooms.all');
     Route::get('/create-room', [AdminController::class, 'createRoom'])->name('room.create');
     Route::post('/create-room', [AdminController::class, 'storeRoom'])->name('room.store');
+    Route::delete('/delete-room/{id}', [AdminController::class, 'deleteRoom'])->name('room.delete');
 
 });

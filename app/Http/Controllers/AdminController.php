@@ -147,39 +147,58 @@ class AdminController extends Controller
     }
     public function createRoom()
     {
-        return view('admin.createroom');
+        $hotels = Hotel::select()->orderBy('id', 'desc')->get();
+        return view('admin.createroom', compact('hotels'));
     }
     public function storeRoom(Request $request)
-{
-    try {
-        $request->validate([
-            'name' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
-            'max_persons' => 'required|integer',
-            'size' => 'required|integer',
-            'num_beds' => 'required|integer',
-            'view' => 'required|string',
-            'hotel_id' => 'required|exists:hotels,id',
-        ]);
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5048',
+                'max_persons' => 'required|integer|min:1',
+                'size' => 'required|numeric|min:0',
+                'price' => 'required|numeric|min:0',
+                'num_beds' => 'required|integer|min:1',
+                'view' => 'required|string',
+                'hotel_id' => 'required|exists:hotels,id',
+            ]);
 
-        // Upload the image
-        $imageName = time() . '.' . $request->image->getClientOriginalExtension();
-        $request->image->move(public_path('assets/images'), $imageName);
 
-        $room = Apartment::create([
-            'name' => $request->name,
-            'image' => $imageName,
-            'max_persons' => $request->max_persons,
-            'size' => $request->size,
-            'num_beds' => $request->num_beds,
-            'view' => $request->view,
-            'hotel_id' => $request->hotel_id,
-        ]);
-        return redirect()->back()->with('success', 'Room created successfully');
-    } catch (ValidationException $e) {
-        return redirect()->back()->withErrors($e->validator->errors())->withInput();
-    } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Failed to create room');
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/images'), $imageName);
+
+            $room = Apartment::create([
+                'name' => $request->name,
+                'image' => $imageName,
+                'max_persons' => $request->max_persons,
+                'size' => $request->size,
+                'num_beds' => $request->num_beds,
+                'price' => $request->price,
+                'view' => $request->view,
+                'hotel_id' => $request->hotel_id,
+            ]);
+            return redirect()->back()->with('success', 'Room created successfully');
+        } catch (ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to create room');
+        }
     }
-}
+    public function deleteRoom($id)
+    {
+        try {
+            $room = Apartment::findOrFail($id);
+            $imagePath = public_path('assets/images/' . $room->image);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+            $room->delete();
+            return redirect()->back()->with('success', 'Room deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete room');
+        }
+    }
+
 }

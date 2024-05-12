@@ -4,8 +4,21 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
+                    <div class="container">
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
+                        @if (Session::has('error'))
+                            <div class="alert alert-danger">
+                                {{ Session::get('error') }}
+                            </div>
+                        @endif
+                    </div>
                     <h5 class="card-title mb-4 d-inline">Rooms</h5>
-                    <a href="create-rooms.html" class="btn btn-primary mb-4 text-center float-right">Create Room</a>
+                    <a href="{{ route('room.create') }}" class="btn btn-primary mb-4 text-center float-right">Create Room</a>
                     <table class="table">
                         <thead>
                             <tr>
@@ -26,15 +39,21 @@
                                 <tr>
                                     <th scope="row">{{ $room->id }}</th>
                                     <td>{{ $room->name }}</td>
-                                    <td><img width="40" height="40" src="{{ asset('assets/images/' . $room->image . '') }}" alt=""></td>
+                                    <td><img width="40" height="40"
+                                            src="{{ asset('assets/images/' . $room->image . '') }}" alt=""></td>
                                     <td>${{ $room->price }}</td>
-                                    <td>{{$room->max_persons}}</td>
-                                    <td>{{$room->size}}</td>
-                                    <td>{{$room->view}}</td>
-                                    <td>{{$room->num_beds}}</td>
-                                    <td>{{$room->hotel->name}}</td>
-                                    <td><a href="delete-country.html" class="btn btn-danger  text-center ">Delete</a></td>
-                                </tr>
+                                    <td>{{ $room->max_persons }}</td>
+                                    <td>{{ $room->size }}</td>
+                                    <td>{{ $room->view }}</td>
+                                    <td>{{ $room->num_beds }}</td>
+                                    <td>{{ $room->hotel->name }}</td>
+                                    <td>
+                                        <form action="{{ route('room.delete', $room->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger text-center">Delete</button>
+                                        </form>
+                                    </td>                                </tr>
                             @endforeach
                         </tbody>
                     </table>
