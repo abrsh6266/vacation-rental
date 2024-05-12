@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Apartment\Apartment;
+use App\Models\Booking;
 use App\Models\Hotel\Hotel;
 use File;
 use Hash;
@@ -200,5 +201,19 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Failed to delete room');
         }
     }
-
+    public function allBookings()
+    {
+        $bookings = Booking::select()->orderBy('id', 'desc')->get();
+        return view('admin.allbooking', compact('bookings'));
+    }
+    public function deleteBooking($id)
+    {
+        try {
+            $booking = Booking::findOrFail($id);
+            $booking->delete();
+            return redirect()->back()->with('success', 'Booking deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete booking');
+        }
+    }
 }

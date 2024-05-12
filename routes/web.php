@@ -70,5 +70,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
     Route::get('/create-room', [AdminController::class, 'createRoom'])->name('room.create');
     Route::post('/create-room', [AdminController::class, 'storeRoom'])->name('room.store');
     Route::delete('/delete-room/{id}', [AdminController::class, 'deleteRoom'])->name('room.delete');
+ 
 
+    //bookings
+    Route::get('/all-bookings', [AdminController::class, 'allBookings'])->name('bookings.all');
+    Route::delete('/delete-booking/{id}', [AdminController::class, 'deleteBooking'])->name('booking.delete');
 });
